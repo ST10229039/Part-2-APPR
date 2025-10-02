@@ -113,12 +113,14 @@ GiftOfTheGivers/
 └── Configuration/
     ├── Program.cs
     └── appsettings.json
+
+---
 ⚙️ Quick Start
 ✅ Prerequisites
 .NET 8 SDK
 
 Visual Studio 2022 or VS Code
-
+---
 Git
 
 🛠️ Installation
@@ -130,7 +132,7 @@ dotnet restore
 dotnet run
 Open browser at:
 https://localhost:7000 or http://localhost:5000
-
+---
 🔐 Test Accounts
 Administrator
 Email: admin@giftofthegivers.org
@@ -142,19 +144,20 @@ Email: test@example.com
 
 Password: test123
 
+---
 🔧 Configuration
 Development
 In-Memory DB with seed data
 
 Test users, incidents, and projects
-
+---
 Production
 Azure SQL Database
 
 SSL enforced
 
 Env-based config
-
+---
 🗃️ Database Schema
 Core Entities
 Users: Login, roles, profiles
@@ -166,7 +169,7 @@ ResourceDonations: Donation lifecycle
 Volunteers: Registration & assignments
 
 ReliefProjects: Active initiatives
-
+---
 Relationships
 One-to-Many: Users → Incidents
 
@@ -175,7 +178,7 @@ One-to-Many: Users → Volunteers
 Many-to-One: Donations → Incidents
 
 Many-to-One: Volunteers → Projects
-
+---
 📈 CI/CD Pipeline – Azure DevOps
 Pipeline Stages
 Build & Test
@@ -199,7 +202,7 @@ Manual approval gates
 Final deployment
 
 Health checks
-
+---
 🧪 Testing Strategy
 ✅ Unit tests for business logic
 
@@ -212,7 +215,7 @@ Health checks
 🧰 Code quality & performance analysis
 
 🔍 Security scans (CSRF, input validation, auth checks)
-
+---
 📡 API Endpoints
 🔐 Authentication
 POST /Account/Login – Login
@@ -220,28 +223,28 @@ POST /Account/Login – Login
 POST /Account/Register – Register
 
 GET /Account/Logout – Logout
-
+---
 🆘 Incidents
 GET /Incident/Index – List incidents
 
 POST /Incident/Report – Submit incident
 
 GET /Incident/Details/{id} – View incident
-
+---
 🎁 Donations
 GET /Donation/Donate – Donation form
 
 POST /Donation/Donate – Submit donation
 
 GET /Donation/Manage – Admin panel
-
+---
 👥 Volunteers
 GET /Volunteer/Register – Sign up
 
 POST /Volunteer/Register – Submit form
 
 GET /Volunteer/Opportunities – View roles
-
+---
 🔄 Development Workflow
 Branch Strategy (GitFlow)
 main: Production
@@ -263,6 +266,7 @@ docs: Update documentation
 refactor: Code refactor
 test: Add or modify tests
 chore: Non-functional updates
+---
 🎨 UI/UX Design
 Design Principles
 Mobile-first (Responsive)
@@ -279,7 +283,7 @@ Validation feedback
 Loading indicators
 
 Consistent branding and color palette
-
+---
 📊 Performance Goals
 Metric	Target
 Page load time	< 3 seconds
@@ -296,6 +300,7 @@ Minified JS/CSS
 
 CDN for static resources
 
+---
 🤝 Contributing
 Setup for Developers
 Fork this repo
@@ -314,10 +319,10 @@ Include XML docs
 Write unit tests for features
 
 Keep documentation updated
-
+---
 📄 License
-This project is developed for academic purposes as part of the APPR6312 - Applied Programming course.
-All rights reserved by the developer and the academic institution.
+
+All rights reserved by the developer 
 
 📞 Support
 Developer: Thabelo Mavhaga
