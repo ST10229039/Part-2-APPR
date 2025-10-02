@@ -1,0 +1,58 @@
+﻿@model GiftOfTheGivers.Models.DisasterIncident
+@{
+    ViewData["Title"] = "Report Incident";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card feature-card">
+            <div class="card-header bg-danger text-white text-center py-4">
+                <h3 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Report Disaster Incident</h3>
+                <p class="mb-0 mt-2">Help us respond quickly by providing accurate information</p>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Report" method="post">
+                    <!-- Form content remains the same as before, but with better styling -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Title" class="form-label">Incident Title</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                <input asp-for="Title" class="form-control" placeholder="e.g., Flooding in Durban CBD">
+                            </div>
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DisasterType" class="form-label">Disaster Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-category"></i></span>
+                                <select asp-for="DisasterType" class="form-select">
+                                    <option value="">Select Type</option>
+                                    <option value="Flood">Flood</option>
+                                    <option value="Fire">Fire</option>
+                                    <option value="Earthquake">Earthquake</option>
+                                    <option value="Storm">Storm</option>
+                                    <option value="Drought">Drought</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="DisasterType" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Rest of the form with similar input-group styling -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

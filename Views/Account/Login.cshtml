@@ -1,0 +1,99 @@
+﻿@model GiftOfTheGivers.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card feature-card">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h3 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Welcome Back</h3>
+                <p class="mb-0 mt-2">Sign in to your account</p>
+            </div>
+            <div class="card-body p-4">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('Password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label">Remember me</label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">Don't have an account? 
+                            <a asp-action="Register" class="text-primary text-decoration-none fw-bold">Create one here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Demo Accounts Info -->
+        <div class="card mt-4 feature-card">
+            <div class="card-body">
+                <h6 class="card-title"><i class="fas fa-info-circle me-2 text-info"></i>Demo Accounts</h6>
+                <div class="row">
+                    <div class="col-6">
+                        <small class="text-muted">Admin Account:</small><br>
+                        <strong>admin@giftofthegivers.org</strong><br>
+                        <strong class="text-success">admin123</strong>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">User Account:</small><br>
+                        <strong>test@example.com</strong><br>
+                        <strong class="text-success">test123</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.parentNode.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                field.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+    </script>
+}

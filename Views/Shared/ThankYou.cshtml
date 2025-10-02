@@ -1,0 +1,266 @@
+﻿@*
+    Reusable Thank You component that can be used across different contexts
+    Usage: <partial name="ThankYou" model='new { Title = "Success!", Message = "Your action was completed successfully.", Type = "success" }' />
+*@
+
+@model dynamic
+
+@{
+    var title = Model?.Title ?? "Thank You!";
+    var message = Model?.Message ?? "Your action has been completed successfully.";
+    var type = Model?.Type ?? "success"; // success, warning, info, danger
+    var icon = Model?.Icon ?? "fa-check-circle";
+    var showConfetti = Model?.ShowConfetti ?? true;
+    var actions = Model?.Actions as List<dynamic> ?? new List<dynamic>();
+    
+    // Default actions if none provided
+    if (!actions.Any())
+    {
+        actions = new List<dynamic>
+        {
+            new { Text = "Return Home", Url = Url.Action("Index", "Home"), Icon = "fa-home", Style = "outline-primary" },
+            new { Text = "Make Another", Url = Url.Action("Index", "Home"), Icon = "fa-redo", Style = "outline-success" }
+        };
+    }
+}
+
+<div class="thank-you-container text-center py-5">
+    <!-- Animated Icon -->
+    <div class="thank-you-icon mb-4">
+        @if (type == "success")
+        {
+            <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+        }
+        else if (type == "warning")
+        {
+            <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem;"></i>
+        }
+        else if (type == "danger")
+        {
+            <i class="fas fa-times-circle text-danger" style="font-size: 4rem;"></i>
+        }
+        else
+        {
+            <i class="fas fa-info-circle text-info" style="font-size: 4rem;"></i>
+        }
+    </div>
+
+    <!-- Title and Message -->
+    <h2 class="thank-you-title mb-3 text-@type">@title</h2>
+    <p class="thank-you-message lead text-muted mb-4">@message</p>
+
+    <!-- Reference Number (if provided) -->
+    @if (Model?.ReferenceNumber != null)
+    {
+        <div class="reference-number mb-4">
+            <strong class="text-muted">Reference:</strong>
+            <code class="ms-2 bg-light px-2 py-1 rounded">@Model.ReferenceNumber</code>
+        </div>
+    }
+
+    <!-- Additional Content -->
+    @if (Model?.AdditionalContent != null)
+    {
+        <div class="additional-content mb-4">
+            @Html.Raw(Model.AdditionalContent)
+        </div>
+    }
+
+    <!-- Action Buttons -->
+    <div class="action-buttons row justify-content-center">
+        @foreach (var action in actions)
+        {
+            <div class="col-auto mb-2">
+                <a href="@action.Url" class="btn btn-@action.Style">
+                    <i class="fas @action.Icon me-2"></i>@action.Text
+                </a>
+            </div>
+        }
+    </div>
+
+    <!-- Next Steps (if provided) -->
+    @if (Model?.NextSteps != null)
+    {
+        <div class="next-steps mt-5">
+            <h5 class="mb-3">What Happens Next?</h5>
+            <div class="row justify-content-center">
+                @foreach (var step in Model.NextSteps)
+                {
+                    <div class="col-md-3 mb-3">
+                        <div class="card feature-card h-100 text-center">
+                            <div class="card-body">
+                                <i class="fas @step.Icon fa-2x text-primary mb-3"></i>
+                                <h6>@step.Title</h6>
+                                <p class="small text-muted mb-0">@step.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Impact Statistics (if provided) -->
+    @if (Model?.ImpactStats != null)
+    {
+        <div class="impact-stats mt-5">
+            <h5 class="mb-4">Your Impact</h5>
+            <div class="row justify-content-center">
+                @foreach (var stat in Model.ImpactStats)
+                {
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="stat-card text-center">
+                            <div class="stat-number h4 text-primary mb-1">@stat.Value</div>
+                            <div class="stat-label small text-muted">@stat.Label</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .thank-you-container {
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .thank-you-icon {
+        animation: bounceIn 1s ease-in-out;
+    }
+
+    .thank-you-title {
+        animation: slideInDown 0.8s ease-out 0.2s both;
+    }
+
+    .thank-you-message {
+        animation: slideInDown 0.8s ease-out 0.4s both;
+    }
+
+    .action-buttons {
+        animation: slideInUp 0.8s ease-out 0.6s both;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes bounceIn {
+        0% {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        70% {
+            transform: scale(0.9);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add confetti for success messages
+            @if (showConfetti && type == "success")
+            {
+                <text>
+                createConfetti();
+                </text>
+            }
+
+            // Track conversion if it's a success action
+            @if (type == "success")
+            {
+                <text>
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-123456789/ABC123'
+                    });
+                }
+                </text>
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['#28a745', '#17a2b8', '#ffc107', '#dc3545', '#6f42c1'];
+            const confettiCount = 30;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: 8px;
+                        height: 8px;
+                        background-color: ${colors[Math.floor(Math.random() * colors.length)]};
+                        top: -10px;
+                        left: ${Math.random() * 100}%;
+                        opacity: ${Math.random() * 0.5 + 0.5};
+                        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                        pointer-events: none;
+                        z-index: 9999;
+                    `;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animation = confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 2000 + 1000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                    });
+                    
+                    animation.onfinish = () => confetti.remove();
+                }, i * 100);
+            }
+        }
+    </script>
+}

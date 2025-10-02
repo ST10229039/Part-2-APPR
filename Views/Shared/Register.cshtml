@@ -1,0 +1,198 @@
+﻿@*
+    This is a reusable registration form component that can be used across different registration pages
+    Usage: <partial name="Register" model="new User()" />
+*@
+
+@model GiftOfTheGivers.Models.User
+
+<div class="card feature-card">
+    <div class="card-header bg-primary text-white text-center py-3">
+        <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>Create Your Account</h5>
+    </div>
+    <div class="card-body p-4">
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name" class="form-label">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input asp-for="Name" class="form-control" placeholder="Enter your full name">
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" 
+                               placeholder="Create a password" required>
+                    </div>
+                    <div class="form-text">Must be at least 8 characters long</div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="confirmPassword" 
+                               placeholder="Confirm your password" required>
+                    </div>
+                    <div id="passwordMatch" class="form-text"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Phone" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        <input asp-for="Phone" class="form-control" placeholder="+27 123 456 7890">
+                    </div>
+                    <span asp-validation-for="Phone" class="text-danger small"></span>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <input asp-for="Address" class="form-control" placeholder="Your physical address">
+                    </div>
+                    <span asp-validation-for="Address" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                    <label class="form-check-label" for="termsAgreement">
+                        I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+            </div>
+
+            <div class="text-center mt-3">
+                <p class="mb-0">Already have an account? 
+                    <a asp-controller="Account" asp-action="Login" class="text-primary text-decoration-none fw-bold">Sign in here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Registration Benefits -->
+<div class="card feature-card mt-4">
+    <div class="card-header bg-success text-white">
+        <h6 class="mb-0"><i class="fas fa-gift me-2"></i>Account Benefits</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Track your donations</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Manage volunteer activities</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Report incidents quickly</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Receive updates on relief efforts</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Access to exclusive content</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Personalized dashboard</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password confirmation validation
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordMatch = document.getElementById('passwordMatch');
+
+            function validatePassword() {
+                if (confirmPassword.value === '') {
+                    passwordMatch.textContent = 'Please confirm your password';
+                    passwordMatch.className = 'form-text text-muted';
+                } else if (password.value !== confirmPassword.value) {
+                    passwordMatch.textContent = 'Passwords do not match';
+                    passwordMatch.className = 'form-text text-danger';
+                } else {
+                    passwordMatch.textContent = 'Passwords match';
+                    passwordMatch.className = 'form-text text-success';
+                }
+            }
+
+            password.addEventListener('input', validatePassword);
+            confirmPassword.addEventListener('input', validatePassword);
+
+            // Form submission handling
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const terms = document.getElementById('termsAgreement');
+                if (!terms.checked) {
+                    e.preventDefault();
+                    showNotification('Please agree to the Terms of Service and Privacy Policy.', 'error');
+                    return;
+                }
+
+                if (password.value !== confirmPassword.value) {
+                    e.preventDefault();
+                    showNotification('Please make sure your passwords match.', 'error');
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+
+        function showNotification(message, type = 'info') {
+            const alertClass = type === 'success' ? 'alert-success' : 
+                              type === 'error' ? 'alert-danger' : 'alert-info';
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                <i class="fas ${icon} me-2"></i>${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    </script>
+}
