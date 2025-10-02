@@ -1,0 +1,297 @@
+﻿@model IEnumerable<GiftOfTheGivers.Models.ResourceDonation>
+@{
+    ViewData["Title"] = "Manage Donations";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-donate me-2 text-success"></i>Donation Management</h2>
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fas fa-download me-1"></i>Export
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"><i class="fas fa-file-excel me-1"></i>Excel</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-1"></i>PDF</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary stat-card">
+            <div class="card-body text-center">
+                <i class="fas fa-inbox fa-2x mb-2"></i>
+                <h3>@Model.Count()</h3>
+                <p class="mb-0">Total Donations</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning stat-card">
+            <div class="card-body text-center">
+                <i class="fas fa-clock fa-2x mb-2"></i>
+                <h3>@Model.Count(d => d.Status == "Pending")</h3>
+                <p class="mb-0">Pending</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success stat-card">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h3>@Model.Count(d => d.Status == "Received")</h3>
+                <p class="mb-0">Received</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-info stat-card">
+            <div class="card-body text-center">
+                <i class="fas fa-truck fa-2x mb-2"></i>
+                <h3>@Model.Count(d => d.Status == "Distributed")</h3>
+                <p class="mb-0">Distributed</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Donations Table -->
+<div class="card feature-card">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Donations</h5>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="showOnlyPending">
+            <label class="form-check-label text-white" for="showOnlyPending">Show Pending Only</label>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Donor</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Incident</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var donation in Model)
+                    {
+                        <tr data-status="@donation.Status.ToLower()">
+                            <td>
+                                <div>
+                                    <strong>@donation.DonorName</strong>
+                                    <br>
+                                    <small class="text-muted">@donation.DonorEmail</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <strong>@donation.ItemName</strong>
+                                    @if (!string.IsNullOrEmpty(donation.Description))
+                                    {
+                                        <br>
+                                        <small class="text-muted">@donation.Description</small>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary fs-6">@donation.Quantity</span>
+                            </td>
+                            <td>
+                                <span class="badge @GetDonationTypeBadge(donation.ItemType)">@donation.ItemType</span>
+                            </td>
+                            <td>
+                                <small>@donation.DonationDate.ToString("MMM dd, yyyy")</small>
+                                <br>
+                                <small class="text-muted">@donation.DonationDate.ToString("hh:mm tt")</small>
+                            </td>
+                            <td>
+                                <span class="badge @GetStatusBadge(donation.Status)">@donation.Status</span>
+                            </td>
+                            <td>
+                                @if (donation.Incident != null)
+                                {
+                                    <small>@donation.Incident.Title</small>
+                                    <br>
+                                    <small class="text-muted">@donation.Incident.Location</small>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">General</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-outline-primary" 
+                                            onclick="updateDonationStatus(@donation.DonationID, 'Received')"
+                                            @(donation.Status == "Received" || donation.Status == "Distributed" ? "disabled" : "")>
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success"
+                                            onclick="updateDonationStatus(@donation.DonationID, 'Distributed')"
+                                            @(donation.Status == "Distributed" ? "disabled" : "")>
+                                        <i class="fas fa-truck"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" 
+                                            data-bs-target="#donationModal" 
+                                            onclick="viewDonationDetails(@donation.DonationID)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+        <h3>No Donations Yet</h3>
+        <p class="text-muted">There are no donations in the system.</p>
+    </div>
+}
+
+<!-- Donation Details Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Donation Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="donationDetails">
+                <!-- Details will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Filter table to show only pending donations
+        document.getElementById('showOnlyPending').addEventListener('change', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if (this.checked) {
+                    row.style.display = row.dataset.status === 'pending' ? '' : 'none';
+                } else {
+                    row.style.display = '';
+                }
+            });
+        });
+
+        // Update donation status
+        async function updateDonationStatus(donationId, status) {
+            if (!confirm('Are you sure you want to update the donation status?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/Donation/UpdateStatus/${donationId}?status=${status}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('Donation status updated successfully!', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showNotification(result.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error updating donation status: ' + error.message, 'error');
+            }
+        }
+
+        // View donation details
+        async function viewDonationDetails(donationId) {
+            // In a real application, you would fetch details from the server
+            const details = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Donor Information</h6>
+                        <p><strong>Name:</strong> Donor Name</p>
+                        <p><strong>Email:</strong> donor@example.com</p>
+                        <p><strong>Phone:</strong> +27 123 456 789</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Donation Details</h6>
+                        <p><strong>Item:</strong> Sample Item</p>
+                        <p><strong>Quantity:</strong> 10</p>
+                        <p><strong>Type:</strong> Food</p>
+                        <p><strong>Drop-off Location:</strong> Central Warehouse</p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6>Additional Notes</h6>
+                        <p class="text-muted">No additional notes provided.</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('donationDetails').innerHTML = details;
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create and show notification
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    </script>
+}
+
+@functions {
+    public string GetStatusBadge(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "pending" => "bg-warning",
+            "received" => "bg-success",
+            "distributed" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+    public string GetDonationTypeBadge(string itemType)
+    {
+        return itemType?.ToLower() switch
+        {
+            "food" => "bg-success",
+            "clothing" => "bg-primary",
+            "medical supplies" => "bg-danger",
+            "shelter" => "bg-warning",
+            "hygiene" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+}

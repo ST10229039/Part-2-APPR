@@ -1,0 +1,183 @@
+﻿@model GiftOfTheGivers.Models.Volunteer
+@{
+    ViewData["Title"] = "My Volunteer Profile";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Profile Header -->
+        <div class="card feature-card mb-4">
+            <div class="card-body text-center py-4">
+                <div class="avatar-section mb-3">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas fa-user fa-2x text-white"></i>
+                    </div>
+                </div>
+                <h3 class="mb-2">@Model.User.Name</h3>
+                <p class="text-muted mb-3">Volunteer since @Model.RegistrationDate.ToString("MMMM dd, yyyy")</p>
+                <span class="badge bg-success fs-6">
+                    <i class="fas fa-circle me-1"></i>@Model.Status
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Personal Information -->
+            <div class="col-md-6 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <p class="mb-0">@Model.User.Email</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Phone</label>
+                            <p class="mb-0">@(Model.User.Phone ?? "Not provided")</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Address</label>
+                            <p class="mb-0">@(Model.User.Address ?? "Not provided")</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Emergency Contact</label>
+                            <p class="mb-0">@(Model.EmergencyContact ?? "Not provided")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Details -->
+            <div class="col-md-6 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-id-card me-2"></i>Volunteer Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Skills</label>
+                            <p class="mb-0">@Model.Skills</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Availability</label>
+                            <p class="mb-0">@Model.Availability</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Preferred Location</label>
+                            <p class="mb-0">@(Model.PreferredLocation ?? "Any location")</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Transportation</label>
+                            <p class="mb-0">
+                                @if (Model.HasTransport)
+                                {
+                                    <span class="badge bg-success">Has Transport</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">No Transport</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Assignment -->
+        @if (Model.AssignedIncident != null)
+        {
+            <div class="card feature-card mb-4">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Current Assignment</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>@Model.AssignedIncident.Title</h6>
+                            <p class="text-muted mb-2">@Model.AssignedIncident.Description</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary">
+                                    <i class="fas fa-map-marker-alt me-1"></i>@Model.AssignedIncident.Location
+                                </span>
+                                <span class="badge bg-info">
+                                    <i class="fas @GetDisasterIcon(Model.AssignedIncident.DisasterType) me-1"></i>@Model.AssignedIncident.DisasterType
+                                </span>
+                                <span class="badge bg-warning">
+                                    <i class="fas fa-users me-1"></i>@Model.AssignedIncident.PeopleAffected affected
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="mb-2">
+                                <small class="text-muted">Assigned Notes:</small>
+                                <p class="mb-0">@(Model.AssignmentNotes ?? "No specific notes")</p>
+                            </div>
+                            <a asp-controller="Incident" asp-action="Details" asp-route-id="@Model.AssignedIncident.IncidentID" 
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-external-link-alt me-1"></i>View Incident
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card feature-card mb-4">
+                <div class="card-body text-center py-4">
+                    <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                    <h5>No Current Assignment</h5>
+                    <p class="text-muted mb-3">You are not currently assigned to any relief operations.</p>
+                    <a asp-action="Opportunities" class="btn btn-primary">
+                        <i class="fas fa-search me-1"></i>Browse Opportunities
+                    </a>
+                </div>
+            </div>
+        }
+
+        <!-- Quick Actions -->
+        <div class="card feature-card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <a asp-controller="Volunteer" asp-action="Opportunities" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-search me-1"></i>Find Opportunities
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-controller="Incident" asp-action="Index" class="btn btn-outline-info w-100">
+                            <i class="fas fa-list me-1"></i>View Incidents
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-controller="Account" asp-action="Profile" class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-cog me-1"></i>Update Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetDisasterIcon(string disasterType)
+    {
+        return disasterType?.ToLower() switch
+        {
+            "fire" => "fa-fire",
+            "flood" => "fa-tint",
+            "storm" => "fa-wind",
+            "earthquake" => "fa-mountain",
+            "drought" => "fa-sun",
+            _ => "fa-exclamation-triangle"
+        };
+    }
+}

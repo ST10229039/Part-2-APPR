@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card feature-card">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h3 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Welcome Back</h3>
+                <p class="mb-0 mt-2">Sign in to your account</p>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">Don't have an account? 
+                            <a asp-action="Register" class="text-primary text-decoration-none fw-bold">Create one here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Demo Accounts Info -->
+        <div class="card mt-4 feature-card">
+            <div class="card-body">
+                <h6 class="card-title"><i class="fas fa-info-circle me-2 text-info"></i>Demo Accounts</h6>
+                <div class="row">
+                    <div class="col-6">
+                        <small class="text-muted">Admin Account:</small><br>
+                        <strong>admin@giftofthegivers.org</strong><br>
+                        <strong>admin123</strong>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">User Account:</small><br>
+                        <strong>test@example.com</strong><br>
+                        <strong>test123</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loading state to form
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function() {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+    </script>
+}

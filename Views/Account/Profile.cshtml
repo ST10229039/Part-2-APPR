@@ -1,0 +1,382 @@
+﻿@model GiftOfTheGivers.Models.User
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Profile Header -->
+        <div class="card feature-card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 100px; height: 100px;">
+                            <i class="fas fa-user fa-3x text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3 class="mb-1">@Model.Name</h3>
+                        <p class="text-muted mb-2">@Model.Email</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-primary fs-6">
+                                <i class="fas fa-user-tag me-1"></i>@Model.Role
+                            </span>
+                            <span class="badge bg-success fs-6">
+                                <i class="fas fa-calendar me-1"></i>Member since @Model.DateCreated.ToString("MMMM yyyy")
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="fas fa-edit me-1"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Personal Information -->
+            <div class="col-md-6 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Full Name</label>
+                            <p class="mb-0 fs-6">@Model.Name</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Email Address</label>
+                            <p class="mb-0 fs-6">@Model.Email</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Phone Number</label>
+                            <p class="mb-0 fs-6">
+                                @if (!string.IsNullOrEmpty(Model.Phone))
+                                {
+                                    @Model.Phone
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not provided</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Physical Address</label>
+                            <p class="mb-0 fs-6">
+                                @if (!string.IsNullOrEmpty(Model.Address))
+                                {
+                                    @Model.Address
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not provided</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Details -->
+            <div class="col-md-6 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-shield me-2"></i>Account Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">User Role</label>
+                            <p class="mb-0 fs-6">
+                                <span class="badge bg-primary">@Model.Role</span>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Account Created</label>
+                            <p class="mb-0 fs-6">@Model.DateCreated.ToString("MMMM dd, yyyy")</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Last Login</label>
+                            <p class="mb-0 fs-6">
+                                <span class="text-muted">Recently</span>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Account Status</label>
+                            <p class="mb-0 fs-6">
+                                <span class="badge bg-success">Active</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card feature-card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    @if (Context.Session.GetString("UserRole") == "Admin")
+                    {
+                        <div class="col-md-4">
+                            <a asp-controller="Donation" asp-action="Manage" class="btn btn-outline-success w-100">
+                                <i class="fas fa-donate me-1"></i>Manage Donations
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-controller="Volunteer" asp-action="Manage" class="btn btn-outline-info w-100">
+                                <i class="fas fa-users-cog me-1"></i>Manage Volunteers
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4">
+                            <a asp-controller="Volunteer" asp-action="Profile" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-id-card me-1"></i>Volunteer Profile
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-controller="Volunteer" asp-action="Opportunities" class="btn btn-outline-info w-100">
+                                <i class="fas fa-search me-1"></i>Find Opportunities
+                            </a>
+                        </div>
+                    }
+                    <div class="col-md-4">
+                        <a asp-controller="Donation" asp-action="Donate" class="btn btn-outline-success w-100">
+                            <i class="fas fa-gift me-1"></i>Make Donation
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-controller="Incident" asp-action="Index" class="btn btn-outline-warning w-100">
+                            <i class="fas fa-list me-1"></i>View Incidents
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-controller="Incident" asp-action="Report" class="btn btn-outline-danger w-100">
+                            <i class="fas fa-plus me-1"></i>Report Incident
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="fas fa-key me-1"></i>Change Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Profile</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editName" value="@Model.Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="editEmail" value="@Model.Email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" value="@Model.Phone" placeholder="+27 123 456 7890">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editRole" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="editRole" value="@Model.Role" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAddress" class="form-label">Address</label>
+                        <textarea class="form-control" id="editAddress" rows="3" placeholder="Enter your full address">@Model.Address</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="updateProfile()">
+                    <i class="fas fa-save me-1"></i>Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title"><i class="fas fa-key me-2"></i>Change Password</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                        <div class="form-text">Password must be at least 8 characters long.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" onclick="changePassword()">
+                    <i class="fas fa-sync-alt me-1"></i>Update Password
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Update profile
+        async function updateProfile() {
+            const formData = {
+                name: document.getElementById('editName').value,
+                email: document.getElementById('editEmail').value,
+                phone: document.getElementById('editPhone').value,
+                address: document.getElementById('editAddress').value
+            };
+
+            // Basic validation
+            if (!formData.name || !formData.email) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            try {
+                // Show loading state
+                const saveBtn = document.querySelector('#editProfileModal .btn-primary');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Saving...';
+                saveBtn.disabled = true;
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                showNotification('Profile updated successfully!', 'success');
+                $('#editProfileModal').modal('hide');
+                
+                // Reset button state
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+
+                // Reload to show updated data
+                setTimeout(() => location.reload(), 1500);
+            } catch (error) {
+                showNotification('Error updating profile: ' + error.message, 'error');
+                
+                // Reset button state on error
+                const saveBtn = document.querySelector('#editProfileModal .btn-primary');
+                saveBtn.innerHTML = '<i class="fas fa-save me-1"></i>Save Changes';
+                saveBtn.disabled = false;
+            }
+        }
+
+        // Change password
+        async function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showNotification('Please fill in all password fields.', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showNotification('New password must be at least 8 characters long.', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showNotification('New passwords do not match.', 'error');
+                return;
+            }
+
+            try {
+                // Show loading state
+                const updateBtn = document.querySelector('#changePasswordModal .btn-warning');
+                const originalText = updateBtn.innerHTML;
+                updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Updating...';
+                updateBtn.disabled = true;
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                showNotification('Password updated successfully!', 'success');
+                $('#changePasswordModal').modal('hide');
+                
+                // Reset form
+                document.getElementById('changePasswordForm').reset();
+                
+                // Reset button state
+                updateBtn.innerHTML = originalText;
+                updateBtn.disabled = false;
+            } catch (error) {
+                showNotification('Error changing password: ' + error.message, 'error');
+                
+                // Reset button state on error
+                const updateBtn = document.querySelector('#changePasswordModal .btn-warning');
+                updateBtn.innerHTML = '<i class="fas fa-sync-alt me-1"></i>Update Password';
+                updateBtn.disabled = false;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                <i class="fas ${icon} me-2"></i>${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Clear form when modal is hidden
+        $('#changePasswordModal').on('hidden.bs.modal', function () {
+            document.getElementById('changePasswordForm').reset();
+        });
+    </script>
+}

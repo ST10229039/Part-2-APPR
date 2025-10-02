@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Volunteer Opportunities";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary"><i class="fas fa-hands-helping me-3"></i>Volunteer With Us</h1>
+    <p class="lead">Join our team of dedicated volunteers and make a real difference in your community</p>
+</div>
+
+<!-- Call to Action -->
+<div class="card feature-card mb-5">
+    <div class="card-body text-center py-5">
+        <i class="fas fa-heart fa-4x text-danger mb-4"></i>
+        <h3 class="mb-3">Ready to Make an Impact?</h3>
+        <p class="lead mb-4">Register as a volunteer and be part of our humanitarian missions</p>
+        <a asp-action="Register" class="btn btn-primary btn-lg">
+            <i class="fas fa-user-plus me-2"></i>Become a Volunteer
+        </a>
+    </div>
+</div>
+
+<!-- Current Opportunities -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h3 class="mb-4"><i class="fas fa-list-alt me-2"></i>Current Volunteer Opportunities</h3>
+    </div>
+    
+    <!-- Active Incidents Needing Volunteers -->
+    @if (ViewBag.ActiveIncidents != null)
+    {
+        foreach (var incident in ViewBag.ActiveIncidents)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-header bg-warning text-white">
+                        <h5 class="mb-0">@incident.Title</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@incident.Description</p>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-map-marker-alt me-1"></i>@incident.Location
+                            </small>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-users me-1"></i>@incident.PeopleAffected people affected
+                            </small>
+                        </div>
+                        <div class="d-grid">
+                            <a asp-action="Register" class="btn btn-outline-warning">
+                                <i class="fas fa-hand-paper me-1"></i>Volunteer for this Mission
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<!-- Volunteer Benefits -->
+<div class="row">
+    <div class="col-12">
+        <h3 class="mb-4"><i class="fas fa-award me-2"></i>Why Volunteer With Us?</h3>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-heartbeat fa-3x text-danger mb-3"></i>
+                <h5>Save Lives</h5>
+                <p class="card-text">Directly impact communities in need and save lives through your efforts.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <h5>Join a Community</h5>
+                <p class="card-text">Become part of a dedicated team working towards common humanitarian goals.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-graduation-cap fa-3x text-success mb-3"></i>
+                <h5>Gain Experience</h5>
+                <p class="card-text">Develop valuable skills in disaster response and humanitarian work.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Volunteer Roles -->
+<div class="card feature-card mt-4">
+    <div class="card-header bg-info text-white">
+        <h4 class="mb-0"><i class="fas fa-tasks me-2"></i>Available Volunteer Roles</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Field Relief Worker</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Medical Volunteer</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Logistics Coordinator</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Distribution Assistant</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Counseling Support</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Administrative Support</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Fundraising Volunteer</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Community Outreach</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
