@@ -1,458 +1,388 @@
-📋 Project Overview
-A comprehensive ASP.NET Core MVC web application developed for Gift Of The Givers, Africa's largest disaster response and humanitarian relief organization. This platform facilitates disaster management, resource coordination, and volunteer engagement through an intuitive web interface.
+🎁 Gift Of The Givers - Disaster Management Web Application
+
+A comprehensive ASP.NET Core MVC application developed for Gift Of The Givers, Africa's largest disaster response and humanitarian relief organization. This platform enables real-time disaster incident reporting, resource coordination, and volunteer engagement via an intuitive web interface.
+
+📚 Project Information
 
 🎓 Academic Project: APPR6312 - Applied Programming
-👨‍💻 Developer: ST10229039 - Thabelo Mavhaga
-📅 Date: 2024
+
+👨‍💻 Developer: Thabelo Mavhaga (Student ID: ST10229039)
+
+🏛 Institution: [Your Institution Name]
+
+📅 Year: 2024
 
 🚀 Live Demo
-Test Environment: https://gift-of-the-givers-test.azurewebsites.net
 
-Production Environment: https://gift-of-the-givers-prod.azurewebsites.net
+Test Environment: gift-of-the-givers-test.azurewebsites.net
 
-✨ Features
+Production Environment: gift-of-the-givers-prod.azurewebsites.net
+
+✨ Key Features
 🔐 Authentication & User Management
-User registration and login system
+
+User registration & login
 
 Role-based access control (Admin, Volunteer, User)
 
 Secure password hashing with BCrypt
 
-Session management and profile management
+Session & profile management
 
 🚨 Disaster Incident Management
-Real-time incident reporting system
 
-Incident categorization by type and severity
+Real-time incident reporting
 
-Geographical location tracking
+Categorization by type & severity
 
-Status tracking (Reported, Active, Resolved)
+Geo-location tracking
 
-Public incident dashboard
+Status lifecycle (Reported, Active, Resolved)
+
+Public dashboard
 
 🎁 Resource Donation System
-Donation item cataloging and tracking
 
-Donation status management (Pending, Received, Distributed)
+Donation cataloging and tracking
 
-Donor information management
+Status updates (Pending, Received, Distributed)
+
+Donor management
 
 Collection point coordination
 
 Impact reporting
 
 👥 Volunteer Management
+
 Volunteer registration and skills assessment
 
 Availability scheduling
 
-Task assignment and tracking
+Task assignment and monitoring
 
-Volunteer performance monitoring
+Emergency contact storage
 
-Emergency contact management
+🛠️ Admin Features
 
-🛠️ Administrative Features
-Comprehensive admin dashboard
+Admin dashboard
 
-User management system
+Full user and donation management
 
-Donation tracking and management
+Volunteer assignment tools
 
-Volunteer assignment coordination
+Analytics & reporting
 
-System analytics and reporting
-
-🛠️ Technology Stack
+🧰 Technology Stack
 Backend
+
 Framework: ASP.NET Core 8.0 MVC
 
-Authentication: Session-based with BCrypt
+Database: Entity Framework Core (In-Memory for Dev, Azure SQL for Prod)
 
-Database: Entity Framework Core + In-Memory DB (Development)
+Authentication: Session-based w/ BCrypt
 
-Architecture: MVC Pattern with Repository Pattern
+Architecture: MVC Pattern + Repository Pattern
 
 Frontend
-UI Framework: Bootstrap 5.3.0
+
+UI Framework: Bootstrap 5.3
+
+Styling: CSS3 + Animations
 
 Icons: Font Awesome 6.0
 
-Styling: Custom CSS with CSS3 animations
+JavaScript: ES6+ (Vanilla JS)
 
-JavaScript: Vanilla JS with modern ES6+ features
+DevOps & Hosting
 
-DevOps & Infrastructure
-Version Control: Git with Azure Repos
+Version Control: Git + Azure Repos
 
 CI/CD: Azure DevOps Pipelines
 
 Hosting: Azure App Services
 
-Database: Azure SQL Database (Production)
+Database: Azure SQL (Production)
 
 📁 Project Structure
-text
 GiftOfTheGivers/
-├── Controllers/                 # MVC Controllers
-│   ├── HomeController.cs       # Landing and dashboard
-│   ├── AccountController.cs    # Authentication
-│   ├── IncidentController.cs   # Disaster management
-│   ├── DonationController.cs   # Donation system
-│   └── VolunteerController.cs  # Volunteer management
-├── Models/                     # Data Models
-│   ├── User.cs                # User accounts
-│   ├── DisasterIncident.cs    # Incident tracking
-│   ├── ResourceDonation.cs    # Donation management
-│   ├── Volunteer.cs           # Volunteer data
-│   └── ReliefProject.cs       # Project management
-├── Views/                      # Razor Views
-│   ├── Home/                  # Landing pages
-│   ├── Account/               # Auth pages
-│   ├── Incident/              # Incident views
-│   ├── Donation/              # Donation views
-│   ├── Volunteer/             # Volunteer views
-│   └── Shared/                # Layout and partials
-├── Data/                      # Data Access Layer
-│   ├── AppDbContext.cs        # Database context
-│   └── SeedData.cs            # Initial data seeding
-├── Services/                  # Business Logic
-│   └── AuthService.cs         # Authentication service
-├── wwwroot/                   # Static Assets
+├── Controllers/           # MVC Controllers
+│   ├── HomeController.cs
+│   ├── AccountController.cs
+│   ├── IncidentController.cs
+│   ├── DonationController.cs
+│   └── VolunteerController.cs
+├── Models/                # Domain Models
+│   ├── User.cs
+│   ├── DisasterIncident.cs
+│   ├── ResourceDonation.cs
+│   ├── Volunteer.cs
+│   └── ReliefProject.cs
+├── Views/                 # Razor Views
+│   ├── Home/
+│   ├── Account/
+│   ├── Incident/
+│   ├── Donation/
+│   ├── Volunteer/
+│   └── Shared/
+├── Data/
+│   ├── AppDbContext.cs
+│   └── SeedData.cs
+├── Services/
+│   └── AuthService.cs
+├── wwwroot/               # Static Files
 │   ├── css/
 │   ├── js/
 │   └── images/
 └── Configuration/
-    ├── Program.cs             # App configuration
-    └── appsettings.json       # Application settings
-🚀 Quick Start
-Prerequisites
-.NET 8.0 SDK
+    ├── Program.cs
+    └── appsettings.json
+
+⚙️ Quick Start
+✅ Prerequisites
+
+.NET 8 SDK
 
 Visual Studio 2022 or VS Code
 
 Git
 
-Installation Steps
-Clone the Repository
-
-bash
+🛠️ Installation
 git clone https://github.com/ST10229039/Part-2-APPR.git
 cd Part-2-APPR
-Restore Dependencies
-
-bash
 dotnet restore
-Run the Application
-
-bash
 dotnet run
-Access the Application
 
-Open your browser to: https://localhost:7000 or http://localhost:5000
 
-Default Test Accounts
-Administrator Account:
+Open your browser at:
+https://localhost:7000 or http://localhost:5000
+
+🔐 Test Accounts
+Administrator
 
 Email: admin@giftofthegivers.org
 
 Password: admin123
 
-Role: Full system access
-
-Regular User Account:
+Regular User
 
 Email: test@example.com
 
 Password: test123
 
-Role: Standard user permissions
-
 🔧 Configuration
-Development Environment
-The application uses an in-memory database for development with pre-seeded data including:
+Development
 
-Sample disaster incidents
+In-Memory database
+
+Seeded test data:
+
+Sample incidents
 
 Relief projects
 
-Test user accounts
+Users and volunteers
 
-Volunteer opportunities
+Production
 
-Production Environment
 Azure SQL Database
 
-Azure App Service hosting
+SSL enforced
 
-Environment-specific configuration
+Environment-specific settings
 
-SSL enforcement
-
-📊 Database Schema
+🗃️ Database Schema
 Core Entities
-Users: User accounts and authentication
 
-DisasterIncidents: Disaster reports and tracking
+Users: Login, roles, profiles
 
-ResourceDonations: Donation management
+DisasterIncidents: Reports and tracking
 
-Volunteers: Volunteer registration and assignments
+ResourceDonations: Donation lifecycle
 
-ReliefProjects: Ongoing relief operations
+Volunteers: Registration & assignments
+
+ReliefProjects: Active initiatives
 
 Relationships
-One-to-Many: Users to Incidents (Reporting)
 
-One-to-Many: Users to Volunteers
+One-to-Many: Users → Incidents
 
-Many-to-One: Donations to Incidents
+One-to-Many: Users → Volunteers
 
-Many-to-One: Volunteers to Projects
+Many-to-One: Donations → Incidents
 
-🎯 Key Features in Detail
-Disaster Reporting System
-Multi-category incident classification
+Many-to-One: Volunteers → Projects
 
-Real-time status updates
-
-Geographical impact assessment
-
-Public visibility controls
-
-Donation Management
-Item categorization (Food, Clothing, Medical, etc.)
-
-Donation status tracking
-
-Collection point management
-
-Impact measurement
-
-Volunteer Coordination
-Skills-based volunteer matching
-
-Availability scheduling
-
-Task assignment system
-
-Performance tracking
-
-🔒 Security Features
-Password hashing with BCrypt
-
-Session-based authentication
-
-Role-based authorization
-
-Input validation and sanitization
-
-CSRF protection
-
-Secure headers configuration
-
-📈 CI/CD Pipeline
-Azure DevOps Pipeline Features
-Automated Builds: Triggered on push to develop/main
-
-Testing: Unit test execution and reporting
-
-Quality Gates: Build validation before deployment
-
-Multi-environment Deployment: Test and production stages
-
-Artifact Management: Build artifact versioning
-
+📈 CI/CD Pipeline – Azure DevOps
 Pipeline Stages
+
 Build & Test
 
-.NET 8 SDK setup
+Restore packages
 
-Dependency restoration
+Compile app
 
-Compilation and build
-
-Unit test execution
+Run unit tests
 
 Deploy to Test
 
-Automatic deployment to test environment
+Auto-deploy to test slot
 
-Environment validation
-
-Smoke testing
+Run smoke tests
 
 Deploy to Production
 
 Manual approval gates
 
-Production deployment
+Final deployment
 
-Health monitoring
+Health checks
 
-🌐 Deployment Architecture
-text
-Azure DevOps Repos
-        ↓
-Azure Pipelines (CI/CD)
-        ↓
-Azure App Services
-├── Test Environment
-└── Production Environment
-        ↓
-Azure SQL Database (Production)
 🧪 Testing Strategy
-Test Coverage
-Unit tests for business logic
 
-Integration tests for data access
+✅ Unit tests for business logic
 
-UI tests for critical user journeys
+🔁 Integration tests for database
 
-API endpoint validation
+🌐 UI tests for workflows
 
-Quality Assurance
-Automated testing in CI pipeline
+🛡 API endpoint testing
 
-Code quality analysis
+🧰 Code quality & performance analysis
 
-Security vulnerability scanning
+🔍 Security scans (CSRF, input validation, auth checks)
 
-Performance benchmarking
+📡 API Endpoints
+🔐 Authentication
 
-📝 API Endpoints
-Authentication
-POST /Account/Login - User authentication
+POST /Account/Login – Login
 
-POST /Account/Register - User registration
+POST /Account/Register – Register
 
-GET /Account/Logout - Session termination
+GET /Account/Logout – Logout
 
-Incident Management
-GET /Incident/Index - List all incidents
+🆘 Incidents
 
-POST /Incident/Report - Create new incident
+GET /Incident/Index – List incidents
 
-GET /Incident/Details/{id} - Incident details
+POST /Incident/Report – Submit incident
 
-Donation System
-GET /Donation/Donate - Donation form
+GET /Incident/Details/{id} – View incident
 
-POST /Donation/Donate - Submit donation
+🎁 Donations
 
-GET /Donation/Manage - Admin donation management
+GET /Donation/Donate – Donation form
 
-Volunteer System
-GET /Volunteer/Register - Volunteer registration
+POST /Donation/Donate – Submit donation
 
-POST /Volunteer/Register - Submit volunteer application
+GET /Donation/Manage – Admin panel
 
-GET /Volunteer/Opportunities - Available opportunities
+👥 Volunteers
+
+GET /Volunteer/Register – Sign up
+
+POST /Volunteer/Register – Submit form
+
+GET /Volunteer/Opportunities – View roles
 
 🔄 Development Workflow
-Branch Strategy (Gitflow)
-main - Production releases
+Branch Strategy (GitFlow)
 
-develop - Development integration
+main: Production
 
-feature/* - Feature development
+develop: Staging/integration
 
-hotfix/* - Production fixes
+feature/*: New features
 
-release/* - Release preparation
+hotfix/*: Critical fixes
+
+release/*: Pre-release
 
 Commit Convention
-text
-feat: add new feature
-fix: resolve issue
-docs: update documentation
-refactor: code restructuring
-test: add tests
-chore: maintenance tasks
-🎨 UI/UX Features
-Responsive Design
-Mobile-first approach
+feat: Add new feature
+fix: Resolve bug
+docs: Update documentation
+refactor: Code refactor
+test: Add or modify tests
+chore: Non-functional updates
 
-Bootstrap 5 grid system
+🎨 UI/UX Design
+Design Principles
 
-Cross-browser compatibility
+Mobile-first (Responsive)
 
-Accessibility compliance (WCAG 2.1)
+Accessibility compliant (WCAG 2.1)
 
-User Experience
+Cross-browser compatible
+
+Experience Enhancements
+
 Intuitive navigation
 
-Progressive disclosure
+Validation feedback
 
-Loading states and feedback
+Loading indicators
 
-Error handling and validation
+Consistent branding and color palette
 
-Visual Design
-Consistent color scheme
+📊 Performance Goals
+Metric	Target
+Page load time	< 3 seconds
+Time to interactive	< 5 seconds
+DB Query Performance	< 100ms
+Concurrent User Support	1000+
+Optimization Tactics
 
-Typography hierarchy
+Caching & Indexing
 
-Interactive elements
+Lazy-loading assets
 
-Professional branding
+Minified JS/CSS
 
-📊 Performance Metrics
-Target Performance
-Page load time: < 3 seconds
-
-Time to interactive: < 5 seconds
-
-Database query performance: < 100ms
-
-Concurrent users: 1000+
-
-Optimization Strategies
-Efficient database indexing
-
-Caching strategies
-
-Asset optimization
-
-Code minification
+CDN for static resources
 
 🤝 Contributing
-Development Setup
-Fork the repository
+Setup for Developers
 
-Create a feature branch
+Fork this repo
 
-Implement changes with tests
+Create a new feature branch
 
-Submit pull request
+Implement and test your changes
 
-Code Standards
-Follow C# coding conventions
+Submit a pull request
 
-Include XML documentation
+Coding Standards
 
-Write unit tests for new features
+Follow C# conventions
 
-Update documentation accordingly
+Include XML docs
+
+Write unit tests for features
+
+Keep documentation updated
 
 📄 License
-This project is developed for educational purposes as part of the APPR6312 Applied Programming course. All rights reserved by the developer and academic institution.
 
-📞 Support & Contact
+This project is developed for academic purposes as part of the APPR6312 - Applied Programming course.
+All rights reserved by the developer and the academic institution.
+
+📞 Support
+
 Developer: Thabelo Mavhaga
 Student ID: ST10229039
 Course: APPR6312 - Applied Programming
 Institution: [Your Institution Name]
 
-For technical support or questions about this project, please contact the developer through the institution's academic channels.
+For inquiries, please contact via academic channels.
 
 🙏 Acknowledgments
-Gift Of The Givers Foundation for the inspiration
 
-Academic Instructors for guidance and supervision
+Gift Of The Givers Foundation – Project inspiration
 
-Microsoft for development tools and Azure services
+Academic Instructors – Supervision and guidance
 
-Open-source community for libraries and frameworks
+Microsoft – Azure tools and hosting
 
+Open-source Community – Libraries and frameworks
