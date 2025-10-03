@@ -8,8 +8,8 @@
 
 - 🎓 **Academic Project**: APPR6312 - Applied Programming  
 - 👨‍💻 **Developer**: Thabelo Mavhaga (Student ID: ST10229039)  
-- 🏛 **Institution**: [Your Institution Name]  
-- 📅 **Year**: 2024  
+- 🏛 **Institution**: Rosebank College 
+- 📅 **Year**: 2025
 
 ---
 
